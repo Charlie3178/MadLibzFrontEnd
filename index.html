@@ -150,7 +150,15 @@ const renderMadLib = (MadLib) => {
     partOfSpeech.innerHTML = word.part_of_speech
 
     const ClearButton
+
+    const interpolateText = (string, inputs) => {
+        for (input in inputs) {
+            string = string.replace(/\(\w*\)/, inputs[input])
+        }
+    }
 }
+
+
 const renderMovie = (movie) => {
         const movieWrapper = document.createElement("div");
         movieWrapper.className = "movie-wrapper";
