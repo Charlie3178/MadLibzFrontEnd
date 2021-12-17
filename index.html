@@ -5,12 +5,96 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 </head>
+<style>
+    html,body {
+    margin:0;
+    padding:0;
+    font-family: 'Poppins', sans-serif;
+}
+    .page-wrapper {
+        margin: 0px;
+    }
+    .nav-bar{
+        background-image: url(Images/background.png);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .logo img{
+        width: 400px;
+    }
+    .choice-wrapper{
+        width: 300px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .choice-wrapper button{
+        font-family: 'Poppins', sans-serif;
+        padding: 10px ;
+        background-color:#7c8cc5 ;
+        border: 2px solid #50C6D0;
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 1000;
+    }
+    .content-wrapper{
+        background-image: url(Images/background.png);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .parts-of-speech{
+        background-color: #7C8CC5;
+        padding: 5px;
+        border: 2px solid #50C6D0;
+        border-radius: 4px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .columns-wrapper{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 50%;
+    }
+    .part-of-speech-options input {
+        border: 2px solid;
+        border-radius: 4px;
+        padding: 7px;
+        margin-bottom: 4px;
+    }
+    .right-column input{
+        border: 2px solid;
+        border-radius: 4px;
+        padding: 7px;
+        margin-bottom: 4px;
+    }
+    .generate {
+        margin-top: 20px;
+        width: 300px;
+        display: flex;
+        justify-content: space-around;
+    }
+    .generate button {
+        font-family: 'Poppins', sans-serif;
+        padding: 10px;
+        background-color:#7c8cc5 ;
+        border: 2px solid #50C6D0;
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 1000;
+    }
+</style>
 <body>
     <div class="page-wrapper">
         <div class="nav-bar">
             <div class="logo">
-                <img src="" alt="">
+                <img src="../MadLibzFrontEnd-main/Images/Mad_Libs_logo-removebg-preview.png" alt="">
             </div>
             <div class="choice-wrapper">
                 <button class="button">Classic!</button>
@@ -25,24 +109,40 @@
                     Adjectives : tell how something is done. Ex Famously, Perfectly and Successfully<br>
                 </p>
             </div>
+            <div class="title">
+                <h1>Title</h1>
+            </div>
+            <div class="columns-wrapper">
             <div class="left-column">
                 <div class="part-of-speech-options">
+                    <!-- <input type="text"><br>
+                    <input type="text"><br>
+                    <input type="text"><br>
+                    <input type="text"><br>
+                    <input type="text"><br>
+                    <input type="text"><br>
+                    <input type="text"><br>
+                    <input type="text"><br>
+                    <input type="text"><br>
+                    <input type="text"><br> -->
                 </div>
             </div>
             <div class="right-column">
-                <input type="text" placeholder="">
-                <input type="text" placeholder="">
-                <input type="text" placeholder="">
-                <input type="text" placeholder="">
-                <input type="text" placeholder="">
-                <input type="text" placeholder="">
-                <input type="text" placeholder="">
-                <input type="text" placeholder="">
-                <input type="text" placeholder="">
-                <input type="text" placeholder="">
+                <input type="text" placeholder=""><br>
+                <input type="text" placeholder=""><br>
+                <input type="text" placeholder=""><br>
+                <input type="text" placeholder=""><br>
+                <input type="text" placeholder=""><br>
+                <input type="text" placeholder=""><br>
+                <input type="text" placeholder=""><br>
+                <input type="text" placeholder=""><br>
+                <input type="text" placeholder=""><br>
+                <input type="text" placeholder=""><br>
             </div>
+        </div>
             <div class="generate">
                 <button id="generate-madlib">Generate</button>
+                <button id="clear-madlib">Clear</button>
             </div>
         </div>
     </div>
