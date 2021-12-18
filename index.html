@@ -47,6 +47,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: 100vh;
     }
     .parts-of-speech{
         background-color: #7C8CC5;
@@ -88,6 +89,7 @@
         border-radius: 4px;
         font-size: 15px;
         font-weight: 1000;
+        
     }
 </style>
 <body>
@@ -98,7 +100,7 @@
             </div>
             <div class="choice-wrapper">
                 <button class="button">Classic!</button>
-                <button class="button">Create your Own!</button>
+                <button class="button" id="view">View Past Libs</button>
             </div>
         </div>
         <div class="content-wrapper">
@@ -113,24 +115,24 @@
                 
             </div>
             <div class="columns-wrapper">
-            <div class="left-column">
-                <div class="part-of-speech-options">
-                    <!-- <input type="text"><br> -->
+                <div class="left-column">
+                    <div class="part-of-speech-options">
+                        <!-- <input type="text"><br> -->
+                    </div>
+                </div>
+                <div class="right-column">
+                    <input type="text" placeholder=""><br>
+                    <input type="text" placeholder=""><br>
+                    <input type="text" placeholder=""><br>
+                    <input type="text" placeholder=""><br>
+                    <input type="text" placeholder=""><br>
+                    <input type="text" placeholder=""><br>
+                    <input type="text" placeholder=""><br>
+                    <input type="text" placeholder=""><br>
+                    <input type="text" placeholder=""><br>
+                    <input type="text" placeholder=""><br>
                 </div>
             </div>
-            <div class="right-column">
-                <input type="text" placeholder=""><br>
-                <input type="text" placeholder=""><br>
-                <input type="text" placeholder=""><br>
-                <input type="text" placeholder=""><br>
-                <input type="text" placeholder=""><br>
-                <input type="text" placeholder=""><br>
-                <input type="text" placeholder=""><br>
-                <input type="text" placeholder=""><br>
-                <input type="text" placeholder=""><br>
-                <input type="text" placeholder=""><br>
-            </div>
-        </div>
             <div class="generate">
                 <button id="generate-madlib">Generate</button>
                 
@@ -146,158 +148,231 @@ const renderMadLib = (MadLib) => {
     const titleTag = document.createElement("h3")
     titleTag.innerHTML = template.title
 
-    const partOfSpeech = document.createElement("p")
-    partOfSpeech.innerHTML = word.part_of_speech
+    const completedTemplate = document.createElement("p")
+    comleteedTemplate.innerHTML = template.template
 
-    const ClearButton
+    const clearButton = document.createElement("button")
+    clearButton.innerHTML = "Clear All"
+      
 }
-const renderMovie = (movie) => {
-        const movieWrapper = document.createElement("div");
-        movieWrapper.className = "movie-wrapper";
-        const titleTag = document.createElement("h3");
-        titleTag.innerHTML = movie.title;
-        const genreTag = document.createElement("h5");
-        genreTag.innerHTML = movie.genre;
-        const mpaaRatingTag = document.createElement('h6');
-        mpaaRatingTag.innerHTML = movie.mpaa_rating;
-        const posterImageTag = document.createElement("img");
-        posterImageTag.src = movie.poster_image;
-        const buttonsWrapper = document.createElement("div");
-        buttonsWrapper.className= "buttons-wrapper";
-        const updateButton = document.createElement("button");
-        updateButton.innerHTML = "Edit";
-        const handleUpdate = () => {
-            titleTag.style.display = "none"
-            genreTag.style.display  = "none"
-            mpaaRatingTag.style.display  = "none"
-            posterImageTag.style.display  = "none"
-            const titleInput = document.createElement('input')
-            const genreInput = document.createElement('input')
-            const mpaaRatingInput = document.createElement('input')
-            const posterImageInput = document.createElement('input')
-            titleInput.value = titleTag.innerHTML
-            genreInput.value = genreTag.innerHTML
-            mpaaRatingInput.value = mpaaRatingTag.innerHTML
-            posterImageInput.value = posterImageTag.src
-            movieWrapper.insertBefore(titleInput,buttonsWrapper)
-            movieWrapper.insertBefore(genreInput,buttonsWrapper)
-            movieWrapper.insertBefore(mpaaRatingInput,buttonsWrapper)
-            movieWrapper.insertBefore(posterImageInput,buttonsWrapper)
-            updateButton.innerHTML = "Submit"
-            updateButton.onclick = () => {
-                fetch(`http://127.0.0.1:5000/movie/update/${movie.id}`, {
-                    method: "PUT",
-                    headers: { "content-type" :"application/jason" },
-                    body : JSON.stringify({
-                        title : titleInput.value,
-                        genre : genreInput.value,
-                        mpaa_rating : mpaaRatingInput.value,
-                        poster_image : posterImageInput.value
-                    })            
-                 })
-                 .then(response => response.json())
-                 .then(data => {
-                     console.log(data);
-                     titleTag.innerHTML =titleInput.value
-                     genreTag.innerHTML =genreInput.value
-                     mpaaRatingTag.innerHTML =mpaaRatingInput.value
-                     posterImageTag.src = posterImageInput.value
-                     titleInput.remove();
-                     genreInput.remove();
-                     mpaaRatingInput.remove();
-                     posterImageInput.remove();
-                     titleTag.style.display = "block"
-                     genreTag.style.display = "block"
-                     mpaaRatingTag.style.display = "block"
-                     posterImageTag.style.display = "block"
-                     updateButton.innerHTML = "Edit"
-                 })
-                 .catch(error => console.log('Error updating movie', error))
-            }
-        }
-        updateButton.onclick = handleUpdate
-        const deleteButton = document.createElement("button");
-        deleteButton.innerHTML = "Delete";
-        deleteButton.onclick = () => {
-            fetch(`http://127.0.0.1:5000/movie/delete/${movie.id}` , {
-                method: "DELETE"
-            })
-            .then(respone => respone.json())
-            .then(data => {
-                console.log(data)
-                if (data === "Movie successfully deleted"){
-                    movieWrapper.remove()
-                }
-            })
-            .catch(error => console.log("Error deleting movie", error))
-        }
-        buttonsWrapper.appendChild(updateButton)
-        buttonsWrapper.appendChild(deleteButton)
-        movieWrapper.appendChild(titleTag);
-        movieWrapper.appendChild(genreTag);
-        movieWrapper.appendChild(mpaaRatingTag);
-        movieWrapper.appendChild(posterImageTag);
-        movieWrapper.appendChild(buttonsWrapper);
-        const moviesWrapper = document.querySelector('.movies-wrapper')
-        moviesWrapper.appendChild(movieWrapper)
-        };
-    fetch("http://127.0.0.1:5000/movie/get", { method: "GET" })
-        .then ((response) => response.json())
-        .then((data) => {
-            data.forEach((movie) =>{
-                renderMovie(movie)
-            });
-        })
-        .catch((error) => console.log("Error getting Movies: ", error));
-        const viewMoviesButton = document.querySelector('#view-movies-button')
-        const addMovieButton = document.querySelector('#add-movies-button')
-        const moviesDiv = document.querySelector('.movies-wrapper')
-        const formDiv = document.querySelector('add-movie-form-wrapper')
-        viewMoviesButton.onclick = () => {
-            moviesDiv.style.display = 'flex'
-            formDiv.style.display = "none"
-        };
-        addMovieButton.onclick = () => {
-            moviesDiv.style.display= "none"
-            formDiv.style.display = "flex"
-        };
-        const addMovieForm = document.querySelector('.add-movie-form')
-        addMovieForm.onsubmit = (event) => {
-            event.preventDefault();
-            const titleInput = document.querySelector('#title-input')
-            const genreInput = document.querySelector('#genre-input')
-            const mpaaRatingInput = document.querySelector('#mpaa-rating-input')
-            const posterImageInput = document.querySelector('#poster-image-input')
-            const title = titleInput.value;
-            const genre = genreInput.value;
-            const mpaaRating = mpaaRatingInput.value;
-            const posterImage = posterImageInput.value;
-            fetch('http://127.0.0.1:5000/movie/add', {
-                method:"POST",
-                headers:{"content-type": "application/json"},
-                body: JSON.stringify({
-                    title: title,
-                    genre : genre,
-                    mpaa_rating : mpaaRating,
-                    poster_image : posterImage
-                })
-            })
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data);
-                moviesDiv.style.display = "flex"
-                formDiv.style.display = "none"
-                titleInput.value = ""
-                genreInput.value = ""
-                mpaaRatingInput.value = ""
-                posterImageInput.value = ""
-                fetch(`http://127.0.0.1:5000/movie/get/${movie.id}`)
-                .then(response => response.json())
-                .then(data => renderMovie(data))
-                .catch(error => console.log('Error getting new movie: ', error));
-            })
-            .catch((error) => console.log("Error adding new movie" , error));
-    };
+const partOfSpeechDiv = document.querySelector(".parts-of-speech")
+const templateWrapDiv = document.querySelector(".templateWrapper")
+const columnWrapDiv = document.querySelector(".columns-wrapper")
+const generateButton = document.querySelector("#generate-madlib")
+const viewPastLibsButton = document.querySelector("#view")
+const generateDiv = document.querySelector(".generate")
+const templateViewDiv = document.createElement("div")
+templateViewDiv.innerHTML = "Viewing Completed MadLibs"
+
+const handleView = () => {
+    
+    partOfSpeechDiv.style.display = "none";
+    columnWrapDiv.style.display = "none";
+    generateButton.style.display = "none";
+    templateWrapDiv.appendChild(templateViewDiv)
+
+    const editButton = document.createElement("button");
+    generateDiv.appendChild(editButton)
+    editButton.innerHTML = "Edit"
+
+    // editButton.onclick = () => {
+    // fetch(`https://127.0.0.1:5000/usercreatedlibs/update/${completedLibs.id}`, { method = "PUT" })
+    // .then ((response) => response.json())
+    // .then((data) => {
+    //     data.forEach((completedLibs) =>{
+    //         render(completedLibs)
+    //     })
+    // .catch(error => console.log('Error updating movie', error))
+    // }
+
+
+
+
+
+
+
+
+
+    const deleteButton = document.createElement("button");
+    generateDiv.appendChild(deleteButton)
+    deleteButton.innerHTML = "Delete"
+
+    // deleteButton.onclick = () => {
+    //     fetch(`https://127.0.0.1:5000/usercreatedlibs/delete/${template.id}`, { method = "DELETE" })
+    //     .then(respone => respone.json())
+    //     .then(data => {
+    //         console.log(data)
+    //             if (data === "Movie successfully deleted"){
+    //                 movieWrapper.remove()
+    //             }
+    //         })
+    //     .catch(error => console.log('Error updating movie', error))
+    //     }
+    // }
+
+
+
+
+}
+viewPastLibsButton.onclick = handleView
+
+// const renderMovie = (movie) => {
+//         const movieWrapper = document.createElement("div");
+//         movieWrapper.className = "movie-wrapper";
+//         const titleTag = document.createElement("h3");
+//         titleTag.innerHTML = movie.title;
+//         const genreTag = document.createElement("h5");
+//         genreTag.innerHTML = movie.genre;
+//         const mpaaRatingTag = document.createElement('h6');
+//         mpaaRatingTag.innerHTML = movie.mpaa_rating;
+//         const posterImageTag = document.createElement("img");
+//         posterImageTag.src = movie.poster_image;
+//         const buttonsWrapper = document.createElement("div");
+//         buttonsWrapper.className= "buttons-wrapper";
+//         const updateButton = document.createElement("button");
+//         updateButton.innerHTML = "Edit";
+//         const handleUpdate = () => {
+
+//             titleTag.style.display = "none"
+//             genreTag.style.display  = "none"
+//             mpaaRatingTag.style.display  = "none"
+//             posterImageTag.style.display  = "none"
+
+//             const titleInput = document.createElement('input')
+//             const genreInput = document.createElement('input')
+//             const mpaaRatingInput = document.createElement('input')
+//             const posterImageInput = document.createElement('input')
+
+//             titleInput.value = titleTag.innerHTML
+//             genreInput.value = genreTag.innerHTML
+//             mpaaRatingInput.value = mpaaRatingTag.innerHTML
+//             posterImageInput.value = posterImageTag.src
+
+//             movieWrapper.insertBefore(titleInput,buttonsWrapper)
+//             movieWrapper.insertBefore(genreInput,buttonsWrapper)
+//             movieWrapper.insertBefore(mpaaRatingInput,buttonsWrapper)
+//             movieWrapper.insertBefore(posterImageInput,buttonsWrapper)
+//             updateButton.innerHTML = "Submit"
+
+//             updateButton.onclick = () => {
+//                 fetch(`http://127.0.0.1:5000/movie/update/${movie.id}`, {
+//                     method: "PUT",
+//                     headers: { "content-type" :"application/jason" },
+//                     body : JSON.stringify({
+//                         title : titleInput.value,
+//                         genre : genreInput.value,
+//                         mpaa_rating : mpaaRatingInput.value,
+//                         poster_image : posterImageInput.value
+//                     })            
+//                  })
+//                  .then(response => response.json())
+//                  .then(data => {
+
+//                      console.log(data);
+
+//                      titleTag.innerHTML =titleInput.value
+//                      genreTag.innerHTML =genreInput.value
+//                      mpaaRatingTag.innerHTML =mpaaRatingInput.value
+//                      posterImageTag.src = posterImageInput.value
+
+//                      titleInput.remove();
+//                      genreInput.remove();
+//                      mpaaRatingInput.remove();
+//                      posterImageInput.remove();
+
+//                      titleTag.style.display = "block"
+//                      genreTag.style.display = "block"
+//                      mpaaRatingTag.style.display = "block"
+//                      posterImageTag.style.display = "block"
+
+//                      updateButton.innerHTML = "Edit"
+//                  })
+//                  .catch(error => console.log('Error updating movie', error))
+//             }
+//         }
+//         updateButton.onclick = handleUpdate
+//         const deleteButton = document.createElement("button");
+//         deleteButton.innerHTML = "Delete";
+//         deleteButton.onclick = () => {
+//             fetch(`http://127.0.0.1:5000/movie/delete/${movie.id}` , {
+//                 method: "DELETE"
+//             })
+//             .then(respone => respone.json())
+//             .then(data => {
+//                 console.log(data)
+//                 if (data === "Movie successfully deleted"){
+//                     movieWrapper.remove()
+//                 }
+//             })
+//             .catch(error => console.log("Error deleting movie", error))
+//         }
+//         buttonsWrapper.appendChild(updateButton)
+//         buttonsWrapper.appendChild(deleteButton)
+//         movieWrapper.appendChild(titleTag);
+//         movieWrapper.appendChild(genreTag);
+//         movieWrapper.appendChild(mpaaRatingTag);
+//         movieWrapper.appendChild(posterImageTag);
+//         movieWrapper.appendChild(buttonsWrapper);
+//         const moviesWrapper = document.querySelector('.movies-wrapper')
+//         moviesWrapper.appendChild(movieWrapper)
+//         };
+//     fetch("http://127.0.0.1:5000/movie/get", { method: "GET" })
+//         .then ((response) => response.json())
+//         .then((data) => {
+//             data.forEach((movie) =>{
+//                 renderMovie(movie)
+//             });
+//         })
+//         .catch((error) => console.log("Error getting Movies: ", error));
+//         const viewMoviesButton = document.querySelector('#view-movies-button')
+//         const addMovieButton = document.querySelector('#add-movies-button')
+//         const moviesDiv = document.querySelector('.movies-wrapper')
+//         const formDiv = document.querySelector('add-movie-form-wrapper')
+//         viewMoviesButton.onclick = () => {
+//             moviesDiv.style.display = 'flex'
+//             formDiv.style.display = "none"
+//         };
+//         addMovieButton.onclick = () => {
+//             moviesDiv.style.display= "none"
+//             formDiv.style.display = "flex"
+//         };
+//         const addMovieForm = document.querySelector('.add-movie-form')
+//         addMovieForm.onsubmit = (event) => {
+//             event.preventDefault();
+//             const titleInput = document.querySelector('#title-input')
+//             const genreInput = document.querySelector('#genre-input')
+//             const mpaaRatingInput = document.querySelector('#mpaa-rating-input')
+//             const posterImageInput = document.querySelector('#poster-image-input')
+//             const title = titleInput.value;
+//             const genre = genreInput.value;
+//             const mpaaRating = mpaaRatingInput.value;
+//             const posterImage = posterImageInput.value;
+//             fetch('http://127.0.0.1:5000/movie/add', {
+//                 method:"POST",
+//                 headers:{"content-type": "application/json"},
+//                 body: JSON.stringify({
+//                     title: title,
+//                     genre : genre,
+//                     mpaa_rating : mpaaRating,
+//                     poster_image : posterImage
+//                 })
+//             })
+//             .then(response => response.json())
+//             .then((data) => {
+//                 console.log(data);
+//                 moviesDiv.style.display = "flex"
+//                 formDiv.style.display = "none"
+//                 titleInput.value = ""
+//                 genreInput.value = ""
+//                 mpaaRatingInput.value = ""
+//                 posterImageInput.value = ""
+//                 fetch(`http://127.0.0.1:5000/movie/get/${movie.id}`)
+//                 .then(response => response.json())
+//                 .then(data => renderMovie(data))
+//                 .catch(error => console.log('Error getting new movie: ', error));
+//             })
+//             .catch((error) => console.log("Error adding new movie" , error));
+//     };
 
 
  </script>
